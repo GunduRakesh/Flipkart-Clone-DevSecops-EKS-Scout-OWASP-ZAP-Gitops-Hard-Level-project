@@ -90,9 +90,9 @@ pipeline {
             stage('Docker Scout FS') {
                 steps {
                     script {
-                        withCredentials([string(credentialsId: 'docker-cred', variable: 'docker-cred')]) {
+                        withCredentials([string(credentialsId: 'docker-cred', variable: 'dockercred')]) {
                             // Login to Docker Hub
-                            sh "docker login -u rakesh210 -p ${docker-cred}"
+                            sh "docker login -u rakesh210 -p ${dockercred}"
 
                             // Generate a quick overview and save it as a text file
                             sh "docker-scout quickview fs://. > quickview-report.txt"
@@ -147,9 +147,9 @@ pipeline {
         stage('Docker Scout Image') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'docker-cred', variable: 'docker-cred')]) {
+                    withCredentials([string(credentialsId: 'docker-cred', variable: 'dockercred')]) {
                         // Login to Docker Hub
-                        sh "docker login -u rakesh210 -p ${docker-cred}"
+                        sh "docker login -u rakesh210 -p ${dockercred}"
 
                         // Run Docker Scout CVE scan and save output
                         // sh "docker-scout cves flipkart --format json > image-cves-report.json"
@@ -200,8 +200,8 @@ pipeline {
         stage("Tag & Push to DockerHub") {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'docker-cred', variable: 'docker-cred')]) {
-                        sh "docker login -u rakesh210 -p ${docker-cred}"
+                    withCredentials([string(credentialsId: 'docker-cred', variable: 'dockercred')]) {
+                        sh "docker login -u rakesh210 -p ${dockercred}"
                         sh "docker tag flipkartclone ${env.IMAGE_TAG}"
                         sh "docker push ${env.IMAGE_TAG}"
 
